@@ -8,6 +8,5 @@ import lombok.Data;
 public class Bank {
 
     private String name;
-    private Account account;
     private String branch;
 }
