@@ -7,6 +7,8 @@ import com.ms.bankaccountdetails.model.Account;
 import com.ms.bankaccountdetails.repository.AccountRepository;
 import com.ms.bankaccountdetails.service.AccountServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,16 +104,18 @@ class BankAccountDetailsApplicationTests {
                 .andExpect(jsonPath("$.branch").value("mau"));
     }
 
-    @Test
-    public void testAccountById() throws Exception {
+//    @Test
+    @ParameterizedTest
+    @ValueSource(longs = {1,2,3,4})
+    public void testAccountById(Long id) throws Exception {
 
-        Account account = new Account(1L, "USD", "Bank1", "Branch1", "123456", 1000.0);
+        Account account = new Account(id, "USD", "Bank1", "Branch1", "123456", 1000.0);
 
-        when(accountService.getAccountById(1L)).thenReturn(account);
+        when(accountService.getAccountById(id)).thenReturn(account);
 //        mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
 
         //byte[] jsonPath = objectMapper.writeValueAsBytes(Files.readAllBytes(Path.of("account1.json")));
-        mockMvc.perform(get("/api/accounts/1")
+        mockMvc.perform(get("/api/accounts/"+id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
