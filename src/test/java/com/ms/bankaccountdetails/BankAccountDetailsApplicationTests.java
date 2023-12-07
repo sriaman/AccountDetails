@@ -16,9 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.nio.file.Files;
@@ -68,7 +66,6 @@ class BankAccountDetailsApplicationTests {
     public void testGetAllAccounts() throws Exception {
 
         ClassPathResource resource = new ClassPathResource("account1.json");
-        byte[] jsonData = Files.readAllBytes(Path.of(resource.getURI()));
 
         List<Account> accounts = Arrays.asList(
                 new Account(1L, "USD", "Bank1", "Branch1", "123456", 1000.0),
